@@ -1,0 +1,10 @@
+pandas
+numpy
+scikit-learn
+seaborn
+matplotlib      
+kagglehub      
+
+langchain-core
+langchain-openai
+openrouter
