@@ -1,68 +1,72 @@
-### Evaluation & Metrics
+### Metrics
 
-## Dataset
-- Financial News Sentiment Dataset (Kaggle)
-- Classes: Positive, Negative, Neutral
-- Evaluation performed on a stratified test split
+**Classical ML Model**
+- Accuracy: 72%
+- Precision: 66%
+- Recall: 68%
+- F1-score (macro & weighted): 67%
+- Confusion Matrix (full test set): [[79, 29, 13],
+				    				[36, 462, 77],
+ 									[25, 92, 155]]
 
----
-
-## Zero-Shot LLM Evaluation
-The LLM was evaluated in a zero-shot setting without task-specific fine-tuning.
-
-**Metrics (sample-based):**
-- Accuracy: 0.82%
-- Confusion Matrix: [[0,0,0],
-				[0,0,0],
-				[0,0,0]]
-
-**Observations:**
-- Neutral headlines are the most challenging due to lack of explicit financial signals.
-- Forward-looking statements often introduce ambiguity.
+**Zero-Shot LLM (FinBERT)**
+- Accuracy on balanced sample: 95%
+- Confusion Matrix (class-wise performance): [[15, 0, 0],
+                                             [0, 14, 1],
+                                             [1, 0, 14]]
 
 ---
 
-## Classical ML Evaluation
-A TF-IDF + Logistic Regression model was used as the classical baseline.
+### Tests Performed
 
-**Metrics:**
-- Accuracy: 75%
-- Macro F1-score: 69%
-- Confusion Matrix: [[69,33,19],
-				[21,487,67],
-				[14,92,166]]
+1. **Train–Test Split Validation**
+   - Stratified split to preserve class distribution
 
-**Observations:**
-- Performs well on clearly positive or negative statements.
-- Struggles with context-dependent neutral cases.
+2. **Classical ML Baseline**
+   - TF-IDF features
+   - Supervised classifier
+   - Evaluated on full test set
 
----
+3. **Zero-Shot LLM Evaluation**
+   - Used pretrained FinBERT (no fine-tuning)
+   - Evaluated on a balanced subset to reduce class imbalance bias
 
-## ML vs LLM Comparison
-- LLM captures semantic context better in narrative headlines.
-- ML performs more consistently on structurally similar text.
-- Disagreement analysis highlights complementary strengths.
+4. **Cross-Model Comparison**
+   - Compared ML predictions vs LLM predictions
+   - Identified agreement and disagreement cases
 
 ---
 
-## Error Analysis (LLM-assisted)
-Error analysis was performed **only on genuine LLM misclassifications**.
+### Guardrails Applied
 
-**Key insights:**
-- Mixed financial signals (growth + risk) confuse sentiment boundaries.
-- Headlines lacking numerical indicators are prone to misclassification.
-- Historical vs speculative news affects sentiment interpretation.
-
----
-
-## Limitations
-- Short headlines provide limited context.
-- No temporal market data is used.
-- Zero-shot LLM output may vary across providers.
+- Restricted sentiment labels to:
+  - Positive
+  - Neutral
+  - Negative
+- Invalid or unexpected outputs defaulted safely
+- Balanced sampling used for LLM evaluation
+- Classical ML and LLM evaluations kept **separate** to avoid leakage
 
 ---
 
-## Guardrails & Reliability
-- Output constrained to {Positive, Negative, Neutral}
-- Deterministic decoding (temperature = 0)
-- Error analysis skipped when no misclassifications exist
+### Limitations
+
+- Dataset is heavily skewed toward Neutral sentiment
+- Zero-shot LLM evaluation is performed on a subset for efficiency
+- FinBERT may under-detect subtle negative sentiment
+- No real-time streaming or UI included (time constraints)
+
+---
+
+### Expandability
+
+- Replace FinBERT with larger financial LLMs
+- Add RAG with earnings reports or SEC filings
+- Deploy ML model via FastAPI endpoint
+- Add temporal sentiment trend analysis
+
+---
+
+## Summary 
+
+A reproducible financial news sentiment classifier combining classical ML and zero-shot LLM evaluation using a domain-specific transformer.
