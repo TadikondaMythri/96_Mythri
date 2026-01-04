@@ -1,10 +1,9 @@
 pandas
 numpy
 scikit-learn
+matplotlib
 seaborn
-matplotlib      
-kagglehub      
-
-langchain-core
-langchain-openai
-openrouter
+transformers
+torch
+kagglehub
+joblib
