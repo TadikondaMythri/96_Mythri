@@ -63,7 +63,7 @@ The solution follows a **two-track evaluation approach**:
 ## Tech Stack
 
 - **Machine Learning:** Python, scikit-learn (TF-IDF, Logistic Regression)
-- **Generative AI:** HuggingFace Transformers (FinBERT – optional), LangChain prompts
+- **Generative AI:** HuggingFace Transformers (FinBERT)
 - **Evaluation:** Confusion Matrix, Precision, Recall, F1-score, Error Analysis
 
 ---
@@ -99,31 +99,3 @@ The solution follows a **two-track evaluation approach**:
 - A working financial news sentiment classifier.
 - Comparative study between classical ML and LLM zero-shot inference.
 - Clear evaluation using confusion matrix and metrics.
-
----
-
-## How to Run (Google Colab)
-
-This project is implemented and executed using Google Colab.
-
-1. Open the notebook using the link below:  
- https://colab.research.google.com/drive/1cQJJGP6gq-2jwYJeThIn1XL-umDAixLA
-
-2. Set the OpenRouter API key before running the notebook:
- ```python
- import os
- os.environ["OPENAI_API_KEY"] = "sk-or-v1-xxxxxxxxxxxxxxxx"
-```
-
-3. From the Colab menu, click Runtime → Run all to execute the notebook.
-
-4. The notebook runs in the following order:
- - Dataset download and preprocessing
- - Zero-shot LLM inference using LangChain + OpenRouter
- - Zero-shot analysis table
- - Classical ML baseline (TF-IDF + Logistic Regression)
- - ML vs LLM comparison
- - Confusion matrices
- - LLM-assisted error analysis
-
-5. No local environment setup is required. All dependencies are installed and managed within Google colab.
